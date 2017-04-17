@@ -11,13 +11,11 @@ namespace libunity.message {
       dispatcher = new message_dispatcher(); 
     }
 
-    public void add_listener<T>(string message_name, 
-      message_dispatcher.handler<T> callback) {
+    public void add_listener<T>(string message_name, message_dispatcher.handler<T> callback) {
       dispatcher.add_listener<T>(message_name, callback);
     }
 
-    public void add_listener(string message_name, 
-      message_dispatcher.handler callback) {
+    public void add_listener(string message_name, message_dispatcher.handler callback) {
       dispatcher.add_listener(message_name, callback);
     }
 
@@ -25,8 +23,7 @@ namespace libunity.message {
       dispatcher.remove_listener(message_name);
     }
 
-    public void remove_listener(string message_name, 
-      message_dispatcher.handler callback) {
+    public void remove_listener(string message_name, message_dispatcher.handler callback) {
       dispatcher.remove_listener(message_name, callback);
     }
 
