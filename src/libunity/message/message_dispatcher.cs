@@ -10,15 +10,15 @@ namespace libunity.message {
       handler_table = new Dictionary<string, List<Delegate>>();
     }
 
-    public void add_listener(string message_name, handler handler) {
+    public void AddListener(string message_name, handler handler) {
       add_handler(message_name, handler);
     } 
 
-    public void add_listener<T>(string message_name, handler<T> handler) {
+    public void AddListener<T>(string message_name, handler<T> handler) {
       add_handler(message_name, handler);
     }
 
-    public void add_listener(string message_name, Delegate handler) {
+    public void AddListener(string message_name, Delegate handler) {
       add_handler(message_name, handler);
     }
 
@@ -28,15 +28,15 @@ namespace libunity.message {
       handler_table[message_name].Add(handler);
     }
 
-    public void remove_listener(string message_name, handler handler) {
+    public void RemoveListener(string message_name, handler handler) {
       remove_handler(message_name, handler);
     }
 
-    public void remove_listener<T>(string message_name, handler<T> handler) {
+    public void RemoveListener<T>(string message_name, handler<T> handler) {
       remove_handler(message_name, handler);
     } 
 
-    public void remove_listener(string message_name, Delegate handler) {
+    public void RemoveListener(string message_name, Delegate handler) {
       remove_handler(message_name, handler);
     }
 
@@ -46,25 +46,25 @@ namespace libunity.message {
       }
     }
 
-    public void remove_listener(string message_name) {
+    public void RemoveListener(string message_name) {
       if (handler_table.ContainsKey(message_name)) {
         handler_table[message_name].Clear();
       }
     }
 
-    public void dispatch_message(message_base message) {
+    public void DispatchMessage(message_base message) {
       foreach (Delegate handler in get_handlers(message.get_name())) {
         handler.DynamicInvoke(message);
       }
     }
 
-    public void dispatch_message(string name, object message) {
+    public void DispatchMessage(string name, object message) {
       foreach (Delegate handler in get_handlers(name)) {
         handler.DynamicInvoke(message);
       }
     }
 
-    public void dispatch_message(string name) {
+    public void DispatchMessage(string name) {
       foreach (Delegate handler in get_handlers(name)) {
         handler.DynamicInvoke();
       }
