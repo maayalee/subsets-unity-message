@@ -3,19 +3,19 @@ using System.Collections;
 using System.Reflection;
 using UnityEngine;
 
-namespace libunity.message {
+namespace LibUnity.Message {
   /**
    */
-  public class basic_message_dispatcher : MonoBehaviour {
-    public basic_message_dispatcher() : base() {
-      dispatcher = new message_dispatcher(); 
+  public class BasicMessageDispatcher : MonoBehaviour {
+    public BasicMessageDispatcher() : base() {
+      dispatcher = new MessageDispatcher(); 
     }
 
-    public void AddListener<T>(string message_name, message_dispatcher.handler<T> callback) {
+    public void AddListener<T>(string message_name, MessageDispatcher.Handler<T> callback) {
       dispatcher.AddListener<T>(message_name, callback);
     }
 
-    public void AddListener(string message_name, message_dispatcher.handler callback) {
+    public void AddListener(string message_name, MessageDispatcher.Handler callback) {
       dispatcher.AddListener(message_name, callback);
     }
 
@@ -23,7 +23,7 @@ namespace libunity.message {
       dispatcher.RemoveListener(message_name);
     }
 
-    public void RemoveListener(string message_name, message_dispatcher.handler callback) {
+    public void RemoveListener(string message_name, MessageDispatcher.Handler callback) {
       dispatcher.RemoveListener(message_name, callback);
     }
 
@@ -35,10 +35,10 @@ namespace libunity.message {
       dispatcher.DispatchMessage(message_name);
     }
 
-    public void DispatchMessage(message_base message) {
+    public void DispatchMessage(MessageBase message) {
       dispatcher.DispatchMessage(message);
     }
 
-    protected message_dispatcher dispatcher = null;
+    protected MessageDispatcher dispatcher = null;
   }
 }
