@@ -44,7 +44,7 @@ namespace LibUnity.Message {
       }
     }
 
-    public void DispatchMessage(MonoBehaviour that, MessageBase message) {
+    public void DispatchMessage<MessageType>(MonoBehaviour that, MessageType message) where MessageType : MessageBase {
       DispatcherContainer container;
       if (!objects.TryGetValue(that.GetInstanceID(), out container))
         return;
@@ -81,7 +81,7 @@ namespace LibUnity.Message {
       }
     }
 
-    public void Broadcast(MonoBehaviour that, MessageBase message) {
+    public void Broadcast<MessageType>(MonoBehaviour that, MessageType message) where MessageType : MessageBase {
       MonoBehaviour[] behaviours = that.GetComponentsInChildren<MonoBehaviour>();
       for (int i = 0; i < behaviours.Length; ++i) {
         DispatchMessage(behaviours[i], message);
