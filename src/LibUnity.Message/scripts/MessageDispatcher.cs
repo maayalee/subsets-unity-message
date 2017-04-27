@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace LibUnity.Message {
@@ -7,72 +8,62 @@ namespace LibUnity.Message {
     public delegate void Handler<T>(T message);
 
     public MessageDispatcher() {
-      handler_table = new Dictionary<string, List<Delegate>>();
+      handler_table = new Dictionary<string, IList>();
     }
 
-    public void AddListener(string message_name, Handler handler) {
-      AddHandler(message_name, handler);
-    } 
-
-    public void AddListener<T>(string message_name, Handler<T> handler) {
-      AddHandler(message_name, handler);
+    public void AddListener(string name, Handler handler) {
+      if (!handler_table.ContainsKey(name))
+        handler_table[name] = new List<Handler>();
+      handler_table[name].Add(handler);
     }
 
-    private void AddHandler(string message_name, Delegate handler) {
-      if (!handler_table.ContainsKey(message_name))
-        handler_table[message_name] = new List<Delegate>();
-      handler_table[message_name].Add(handler);
+    public void AddListener<T>(string name, Handler<T> handler) {
+      if (!handler_table.ContainsKey(name))
+        handler_table[name] = new List<Handler<T>>();
+      handler_table[name].Add(handler);
     }
 
-    public void RemoveListener(string message_name, Handler handler) {
-      RemoveHandler(message_name, handler);
-    }
-
-    public void RemoveListener<T>(string message_name, Handler<T> handler) {
-      RemoveHandler(message_name, handler);
-    } 
-
-    public void RemoveListener(string message_name, Delegate handler) {
-      RemoveHandler(message_name, handler);
-    }
-
-    private void RemoveHandler(string message_name, Delegate handler) {
-      if (handler_table.ContainsKey(message_name)) {
-        handler_table[message_name].Remove(handler);
+    public void RemoveListener(string name, Handler handler) {
+      if (handler_table.ContainsKey(name)) {
+        handler_table[name].Remove(handler);
       }
     }
 
-    public void RemoveListener(string message_name) {
-      if (handler_table.ContainsKey(message_name)) {
-        handler_table[message_name].Clear();
+    public void RemoveListener<T>(string name, Handler<T> handler) {
+      if (handler_table.ContainsKey(name)) {
+        handler_table[name].Remove(handler);
       }
     }
 
-    public void DispatchMessage(MessageBase message) {
-      foreach (Delegate handler in GetHandlers(message.GetName())) {
-        handler.DynamicInvoke(message);
+    public void RemoveListener(string name) {
+      if (handler_table.ContainsKey(name)) {
+        handler_table[name].Clear();
       }
     }
 
-    public void DispatchMessage(string name, object message) {
-      foreach (Delegate handler in GetHandlers(name)) {
-        handler.DynamicInvoke(message);
+    public void DispatchMessage<T>(string name, T message) {
+      IList list;
+      if (!handler_table.TryGetValue(name, out list))
+        return;
+      List<Handler<T>> handlers = list as List<Handler<T>>;
+      if (null == handlers)
+        return;
+      for (int i = 0; i < handlers.Count; ++i) {
+        handlers[i].Invoke(message);
       }
     }
 
     public void DispatchMessage(string name) {
-      foreach (Delegate handler in GetHandlers(name)) {
-        handler.DynamicInvoke();
+      IList list;
+      if (!handler_table.TryGetValue(name, out list))
+        return;
+      List<Handler> handlers = list as List<Handler>;
+      if (null == handlers)
+        return;
+      for (int i = 0; i < handlers.Count; ++i) {
+        handlers[i].Invoke();
       }
     }
-
-    private List<Delegate> GetHandlers(string name) {
-      if (handler_table.ContainsKey(name)) {
-        return handler_table[name];
-      }
-      return new List<Delegate>();
-    }
-
-    private Dictionary<string, List<Delegate>> handler_table;
+    private Dictionary<string, IList> handler_table;
   }
 }

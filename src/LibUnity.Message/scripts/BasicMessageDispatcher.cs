@@ -1,44 +1,82 @@
 ﻿using System;
-using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
 namespace LibUnity.Message {
-  /**
-   */
   public class BasicMessageDispatcher : MonoBehaviour {
-    public BasicMessageDispatcher() : base() {
-      dispatcher = new MessageDispatcher(); 
+    public void AddListener(string message_name, MessageDispatcher.Handler handler) {
+      dispatcher.AddListener(message_name, handler);
     }
 
-    public void AddListener<T>(string message_name, MessageDispatcher.Handler<T> callback) {
-      dispatcher.AddListener<T>(message_name, callback);
+    public void AddListener<T>(string message_name, MessageDispatcher.Handler<T> handler) {
+      dispatcher.AddListener(message_name, handler);
     }
 
-    public void AddListener(string message_name, MessageDispatcher.Handler callback) {
-      dispatcher.AddListener(message_name, callback);
+    public void RemoveListener(string message_name, MessageDispatcher.Handler handler) {
+      dispatcher.AddListener(message_name, handler);
+    }
+
+    public void RemoveListener<T>(string message_name, MessageDispatcher.Handler<T> handler) {
+      dispatcher.AddListener(message_name, handler);
     }
 
     public void RemoveListener(string message_name) {
       dispatcher.RemoveListener(message_name);
     }
 
-    public void RemoveListener(string message_name, MessageDispatcher.Handler callback) {
-      dispatcher.RemoveListener(message_name, callback);
+    public void DispatchMessage<T>(string name, T message) {
+      dispatcher.DispatchMessage(name, message);
     }
 
-    public void DispatchMessage(string message_name, object message) {
-      dispatcher.DispatchMessage(message_name, message);
+    public void DispatchMessage(string name) {
+      dispatcher.DispatchMessage(name);
     }
 
-    public void DispatchMessage(string message_name) {
-      dispatcher.DispatchMessage(message_name);
+    public void Broadcast<MessageType>(string name, MessageType message) {
+      BasicMessageDispatcher[] behaviours = GetComponentsInChildren<BasicMessageDispatcher>();
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        behaviour.DispatchMessage(name, message);
+      }
     }
 
-    public void DispatchMessage(MessageBase message) {
-      dispatcher.DispatchMessage(message);
+    public void Broadcast<MessageType>(string name, MessageType message, Type receiver) {
+      Component[] behaviours = GetComponentsInChildren(receiver);
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        behaviour.DispatchMessage(name, message);
+      }
     }
 
-    protected MessageDispatcher dispatcher = null;
+    public void Broadcast(MessageBase message) {
+      BasicMessageDispatcher[] behaviours = GetComponentsInChildren<BasicMessageDispatcher>();
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        behaviour.DispatchMessage(message.GetName(), message);
+      }
+    }
+
+    public void Broadcast(MessageBase message, Type receiver) {
+      Component[] behaviours = GetComponentsInChildren(receiver);
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        behaviour.DispatchMessage(message.GetName(), message);
+      }
+    }
+
+    public void BroadcastWithTag<MessageType>(string name, MessageType message, string tag) {
+      BasicMessageDispatcher[] behaviours = GetComponentsInChildren<BasicMessageDispatcher>();
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        if (behaviour.tag == tag) {
+          behaviour.DispatchMessage(name, message);
+        }
+      }
+    }
+
+    public void BroadcastWithTag(MessageBase message, string tag) {
+      BasicMessageDispatcher[] behaviours = GetComponentsInChildren<BasicMessageDispatcher>();
+      foreach (BasicMessageDispatcher behaviour in behaviours) {
+        if (behaviour.tag == tag) {
+          behaviour.DispatchMessage(message.GetName(), message);
+        }
+      }
+    }
+
+    private MessageDispatcher dispatcher = new MessageDispatcher();
   }
 }
