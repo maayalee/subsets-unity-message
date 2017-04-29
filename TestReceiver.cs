@@ -66,6 +66,12 @@ public class TestReceiver : MonoBehaviour {
 
     t1 = LibUnity.Core.Time.GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
+      message_server.BroadcastAll("Test", 3.0f);
+    }
+    Debug.Log("MessageDispatcherBroadcastAll" + (LibUnity.Core.Time.GetTick() - t1));
+
+    t1 = LibUnity.Core.Time.GetTick();
+    for (int i = 0; i < TRY_COUNT; i++) {
       TestMethod(3.0f);
     }
     Debug.Log("FunctionCall:" + (LibUnity.Core.Time.GetTick() - t1));
