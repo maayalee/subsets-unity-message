@@ -77,14 +77,19 @@ namespace LibUnity.Message {
     }
 
     public void BroadcastAll<MessageType>(string name, MessageType message, Type receiver = null) {
-      if (null == receiver)
-        receiver = typeof(MonoBehaviour);
       List<int> keys = new List<int>(objects.Keys);
       for (int i = 0; i < keys.Count; ++i) {
         DispatcherContainer container;
         if (objects.TryGetValue(keys[i], out container)) {
-          if (container.instance != null && container.instance.GetType() == receiver) {
-            container.dispatcher.DispatchMessage(name, message);
+          if (container.instance != null) {
+            if (null == receiver) {
+              container.dispatcher.DispatchMessage(name, message);
+            }
+            else {
+              if (container.instance.GetType() == receiver) {
+                container.dispatcher.DispatchMessage(name, message);
+              }
+            }
           }
         }
       }
