@@ -63,6 +63,8 @@ namespace LibUnity.Message {
         receiver = typeof(MonoBehaviour);
       Component[] behaviours = that.GetComponentsInChildren(receiver);
       for (int i = 0; i < behaviours.Length; ++i) {
+        if (null == behaviours[i])
+          continue;
         DispatchMessage(behaviours[i] as MonoBehaviour, name, message);
       }
     }
@@ -72,6 +74,8 @@ namespace LibUnity.Message {
         receiver = typeof(MonoBehaviour);
       Component[] behaviours = that.GetComponentsInChildren(receiver);
       for (int i = 0; i < behaviours.Length; ++i) {
+        if (null == behaviours[i])
+          continue;
         DispatchMessage(behaviours[i] as MonoBehaviour, name, message);
       }
     }
