@@ -16,71 +16,71 @@ public class TestReceiver : MonoBehaviour {
 
     handlers += TestMethod;
 
-    double t1 = LibUnity.Core.Time.GetTick();
+    double t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       SendMessage("TestMethod", 3.0f);
     }
-    Debug.Log("SendMessage:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("SendMessage:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       MonoBehaviour[] bs = this.GetComponentsInChildren<MonoBehaviour>();
       for (int j = 0; j < bs.Length; j++) {
         bs[j].SendMessage("TestMethod", 3.0f,  SendMessageOptions.DontRequireReceiver);
       }
     }
-    Debug.Log("GetComponentInChildren and SendMessage:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("GetComponentInChildren and SendMessage:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       TestReceiver[] bs2 = this.GetComponentsInChildren<TestReceiver>();
       for (int j = 0; j < bs2.Length; j++) {
         bs2[j].SendMessage("TestMethod", 3.0f,  SendMessageOptions.DontRequireReceiver);
       }
     }
-    Debug.Log("GetComponentInChildren<T> and SendMessage:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("GetComponentInChildren<T> and SendMessage:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       BroadcastMessage("TestMethod", 3.0f);
     }
-    Debug.Log("BroadcastMessage:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("BroadcastMessage:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       message_server.DispatchMessage(this, "Test", 3.0f);
     }
-    Debug.Log("MessageDispatcher:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("MessageDispatcher:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       message_server.Broadcast(this, "Test", 3.0f);
     }
-    Debug.Log("MessageDispatcherBroadcast:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("MessageDispatcherBroadcast:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       message_server.Broadcast(this, "Test", 3.0f, typeof(TestReceiver));
     }
-    Debug.Log("MessageDispatcherBroadcast<T, U>:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("MessageDispatcherBroadcast<T, U>:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       message_server.BroadcastAll("Test", 3.0f);
     }
-    Debug.Log("MessageDispatcherBroadcastAll" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("MessageDispatcherBroadcastAll" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       TestMethod(3.0f);
     }
-    Debug.Log("FunctionCall:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("FunctionCall:" + (GetTick() - t1));
 
-    t1 = LibUnity.Core.Time.GetTick();
+    t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
       handlers(3.0f);
     }
-    Debug.Log("Delegate:" + (LibUnity.Core.Time.GetTick() - t1));
+    Debug.Log("Delegate:" + (GetTick() - t1));
 	}
 
 	// Update is called once per frame
@@ -97,7 +97,9 @@ public class TestReceiver : MonoBehaviour {
     int a = 3;
   }
 
-
+  private int GetTick() {
+    return System.Environment.TickCount;
+    }
 
   public MessageServer message_server;
 }

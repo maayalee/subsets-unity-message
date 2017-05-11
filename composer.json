@@ -6,14 +6,9 @@
     "name":"Lee, Hyeon-gi"
   },
   "repositories": [
-      { "url": "https://packagist.org", "type": "composer" },
-      {
-        "type":"vcs",
-        "url":"https://github.com/maayalee/libunity-core.git"
-      }
+      { "url": "https://packagist.org", "type": "composer" }
   ],
   "require": {
-    "libunity-core":"dev-master"
   },
   "minimum-stability":"dev"
 }
