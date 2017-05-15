@@ -61,7 +61,7 @@ namespace LibUnity.Message {
     public void Broadcast<MessageType>(MonoBehaviour that, string name, MessageType message, Type receiver = null) {
       if (null == receiver)
         receiver = typeof(MonoBehaviour);
-      Component[] behaviours = that.GetComponentsInChildren(receiver);
+      Component[] behaviours = that.GetComponentsInChildren(receiver, true);
       for (int i = 0; i < behaviours.Length; ++i) {
         if (null == behaviours[i])
           continue;
@@ -72,7 +72,7 @@ namespace LibUnity.Message {
     public void Broadcast<MessageType>(GameObject that, string name, MessageType message, Type receiver = null) {
       if (null == receiver)
         receiver = typeof(MonoBehaviour);
-      Component[] behaviours = that.GetComponentsInChildren(receiver);
+      Component[] behaviours = that.GetComponentsInChildren(receiver, true);
       for (int i = 0; i < behaviours.Length; ++i) {
         if (null == behaviours[i])
           continue;
@@ -100,7 +100,7 @@ namespace LibUnity.Message {
     }
 
     public void BroadcastWithTag<MessageType>(MonoBehaviour that, string name, MessageType message, string tag) {
-      MonoBehaviour[] behaviours = that.GetComponentsInChildren<MonoBehaviour>();
+      MonoBehaviour[] behaviours = that.GetComponentsInChildren<MonoBehaviour>(true);
       foreach (MonoBehaviour behaviour in behaviours) {
         if (behaviour.tag == tag) {
           DispatchMessage(behaviour, name, message);
@@ -109,7 +109,7 @@ namespace LibUnity.Message {
     }
 
     public void BroadcastWithTag<MessageType>(GameObject that, string name, MessageType message, string tag) {
-      MonoBehaviour[] behaviours = that.GetComponentsInChildren<MonoBehaviour>();
+      MonoBehaviour[] behaviours = that.GetComponentsInChildren<MonoBehaviour>(true);
       foreach (MonoBehaviour behaviour in behaviours) {
         if (behaviour.tag == tag) {
           DispatchMessage(behaviour, name, message);
