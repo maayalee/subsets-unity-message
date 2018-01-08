@@ -17,6 +17,7 @@ namespace LibUnity.Message {
     }
 
     public void AddListener<MessageType>(MonoBehaviour that, string name, MessageDispatcher.Handler<MessageType> handler) {
+      Debug.Assert(null != that, "That is not null");
       int id = that.GetInstanceID();
       DispatcherContainer container;
       if (!objects.TryGetValue(id, out container)) {
