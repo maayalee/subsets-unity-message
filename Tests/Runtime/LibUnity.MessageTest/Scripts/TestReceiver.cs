@@ -11,8 +11,8 @@ public class TestReceiver : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-    message_server = GameObject.FindObjectOfType<MessageServer>();
-    message_server.AddListener<float>(this, "Test", TestMethod);
+    messageServer = GameObject.FindObjectOfType<MessageServer>();
+    messageServer.AddListener<float>(this, "Test", TestMethod);
 
     handlers += TestMethod;
 
@@ -48,25 +48,25 @@ public class TestReceiver : MonoBehaviour {
 
     t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
-      message_server.DispatchMessage(this, "Test", 3.0f);
+      messageServer.DispatchMessage(this, "Test", 3.0f);
     }
     Debug.Log("MessageDispatcher:" + (GetTick() - t1));
 
     t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
-      message_server.Broadcast(this, "Test", 3.0f);
+      messageServer.Broadcast(this, "Test", 3.0f);
     }
     Debug.Log("MessageDispatcherBroadcast:" + (GetTick() - t1));
 
     t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
-      message_server.Broadcast(this, "Test", 3.0f, typeof(TestReceiver));
+      messageServer.Broadcast(this, "Test", 3.0f, typeof(TestReceiver));
     }
     Debug.Log("MessageDispatcherBroadcast<T, U>:" + (GetTick() - t1));
 
     t1 = GetTick();
     for (int i = 0; i < TRY_COUNT; i++) {
-      message_server.BroadcastAll("Test", 3.0f);
+      messageServer.BroadcastAll("Test", 3.0f);
     }
     Debug.Log("MessageDispatcherBroadcastAll" + (GetTick() - t1));
 
@@ -101,5 +101,5 @@ public class TestReceiver : MonoBehaviour {
     return System.Environment.TickCount;
     }
 
-  public MessageServer message_server;
+  public MessageServer messageServer;
 }

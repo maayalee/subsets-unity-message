@@ -8,42 +8,42 @@ namespace LibUnity.Message {
     public delegate void Handler<T>(T message);
 
     public MessageDispatcher() {
-      handler_table = new Dictionary<string, IList>();
+      handlerTable = new Dictionary<string, IList>();
     }
 
     public void AddListener(string name, Handler handler) {
-      if (!handler_table.ContainsKey(name))
-        handler_table[name] = new List<Handler>();
-      handler_table[name].Add(handler);
+      if (!handlerTable.ContainsKey(name))
+        handlerTable[name] = new List<Handler>();
+      handlerTable[name].Add(handler);
     }
 
     public void AddListener<T>(string name, Handler<T> handler) {
-      if (!handler_table.ContainsKey(name))
-        handler_table[name] = new List<Handler<T>>();
-      handler_table[name].Add(handler);
+      if (!handlerTable.ContainsKey(name))
+        handlerTable[name] = new List<Handler<T>>();
+      handlerTable[name].Add(handler);
     }
 
     public void RemoveListener(string name, Handler handler) {
-      if (handler_table.ContainsKey(name)) {
-        handler_table[name].Remove(handler);
+      if (handlerTable.ContainsKey(name)) {
+        handlerTable[name].Remove(handler);
       }
     }
 
     public void RemoveListener<T>(string name, Handler<T> handler) {
-      if (handler_table.ContainsKey(name)) {
-        handler_table[name].Remove(handler);
+      if (handlerTable.ContainsKey(name)) {
+        handlerTable[name].Remove(handler);
       }
     }
 
     public void RemoveListener(string name) {
-      if (handler_table.ContainsKey(name)) {
-        handler_table[name].Clear();
+      if (handlerTable.ContainsKey(name)) {
+        handlerTable[name].Clear();
       }
     }
 
     public void DispatchMessage<T>(string name, T message) {
       IList list;
-      if (!handler_table.TryGetValue(name, out list))
+      if (!handlerTable.TryGetValue(name, out list))
         return;
       List<Handler<T>> handlers = list as List<Handler<T>>;
       if (null == handlers)
@@ -55,7 +55,7 @@ namespace LibUnity.Message {
 
     public void DispatchMessage(string name) {
       IList list;
-      if (!handler_table.TryGetValue(name, out list))
+      if (!handlerTable.TryGetValue(name, out list))
         return;
       List<Handler> handlers = list as List<Handler>;
       if (null == handlers)
@@ -64,6 +64,6 @@ namespace LibUnity.Message {
         handlers[i].Invoke();
       }
     }
-    private Dictionary<string, IList> handler_table;
+    private Dictionary<string, IList> handlerTable;
   }
 }
