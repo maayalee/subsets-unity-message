@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LibUnity.Message {
+namespace LibSubsets.Message {
   public interface MessageBase {
     string GetName();
   }

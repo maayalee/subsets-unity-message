@@ -1,6 +1,5 @@
 {
-    "name": "LibUnity.MessageTest",
-    "rootNamespace": "",
+    "name": "LibSubsets.Message.Tests",
     "references": [
         "GUID:83689c907799a3a488216ad066dbc46a",
         "GUID:d3143601704a03b4b9fba19c5c03c155"

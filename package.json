@@ -1,7 +1,7 @@
 {
-  "name": "com.maayalee.libsubsets-unity-message",
+  "name": "com.libsubsets.unity.message",
   "version": "1.0.0",
-  "displayName": "Subsets Message",
+  "displayName": "Library Subsets Message",
   "unity": "2019.4",
   "unityRelease": "21f1",
   "keywords": [],
@@ -12,6 +12,6 @@
   },
   "type": "library",
   "dependencies": {
-    "com.maayalee.libsubsets-unity-unitest": "1.0.1"
+    "com.libsubsets.unity.unittest": "1.0.1"
   }
 }

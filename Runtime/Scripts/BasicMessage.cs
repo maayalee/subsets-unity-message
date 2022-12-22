@@ -1,4 +1,4 @@
-﻿namespace LibUnity.Message {
+﻿namespace LibSubsets.Message {
   abstract public class BasicMessage : MessageBase {
     public BasicMessage(string name) {
       this.name = name;

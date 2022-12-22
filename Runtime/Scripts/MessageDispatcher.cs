@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace LibUnity.Message {
+namespace LibSubsets.Message {
   public class MessageDispatcher {
     public delegate void Handler();
     public delegate void Handler<T>(T message);

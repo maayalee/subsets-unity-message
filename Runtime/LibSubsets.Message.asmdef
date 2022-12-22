@@ -1,6 +1,5 @@
 {
-    "name": "LibUnity.Message",
-    "rootNamespace": "",
+    "name": "LibSubsets.Message",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
