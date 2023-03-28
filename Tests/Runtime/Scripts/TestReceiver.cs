@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using LibSubsets.Message;
+using Subsets.Message;
 
 public class TestReceiver : MonoBehaviour {
   public int TRY_COUNT = 1000;

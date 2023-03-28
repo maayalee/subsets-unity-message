@@ -1,7 +1,7 @@
 {
   "name": "com.libsubsets.unity.message",
   "version": "1.0.0",
-  "displayName": "Library Subsets Message",
+  "displayName": "Subsets Message",
   "unity": "2019.4",
   "unityRelease": "21f1",
   "keywords": [],

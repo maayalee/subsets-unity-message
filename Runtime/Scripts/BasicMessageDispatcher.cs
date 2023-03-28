@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace LibSubsets.Message {
+namespace Subsets.Message {
   public class BasicMessageDispatcher : MonoBehaviour {
     public void AddListener(string message_name, MessageDispatcher.Handler handler) {
       dispatcher.AddListener(message_name, handler);

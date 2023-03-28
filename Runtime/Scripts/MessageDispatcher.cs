@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace LibSubsets.Message {
+namespace Subsets.Message {
   public class MessageDispatcher {
     public delegate void Handler();
     public delegate void Handler<T>(T message);

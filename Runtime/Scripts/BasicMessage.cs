@@ -1,4 +1,4 @@
-﻿namespace LibSubsets.Message {
+﻿namespace Subsets.Message {
   abstract public class BasicMessage : MessageBase {
     public BasicMessage(string name) {
       this.name = name;
